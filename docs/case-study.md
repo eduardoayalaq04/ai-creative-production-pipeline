@@ -4,7 +4,7 @@
 
 Simplixy's production workflow needed to turn an approved Spanish-language script into a coherent vertical video advertisement. The concept used a realistic presenter in a warm creative office, multiple camera setups, and a closing gesture toward information below the ad.
 
-This is a qualitative account of production decisions, not a performance or ROI study. The repository excludes private conversation logs, raw provider responses, credentials, and historical media pending publishing review.
+This is a qualitative account of production decisions, not a performance or ROI study. The repository excludes private conversation logs, raw provider responses, and credentials. The README separately features three owner-authorized bot-assembled video exports, before CapCut finishing and subtitles.
 
 ## Challenge 1: an anchor is not automatically scene one
 

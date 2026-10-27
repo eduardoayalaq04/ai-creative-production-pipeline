@@ -11,6 +11,36 @@ This repository separates two things deliberately:
 
 > The default demo creates labeled **mock JSON records**, not images or video. This version does not call a live generation API, run speech recognition, or render a final edit. Those steps are documented as the original tool-assisted workflow, not misrepresented as shipped automation.
 
+## Video showcase
+
+These are **AI-generated, bot-assembled pre-CapCut exports** from the original skill-guided workflow, not outputs of this repository's mock runner. They are ready for final editorial polish and subtitles in CapCut; they are not presented as finished, subtitled campaign deliverables. Eduardo owns the examples and authorized their use in this portfolio.
+
+### Real estate · two-presenter podcast format
+
+[![Two presenters in a warm podcast studio](examples/previews/real-estate.jpg)](examples/Real%20State.mp4)
+
+[Watch or download the video](examples/Real%20State.mp4) · 48.1 seconds · 720 × 1280 · audio included
+
+A two-presenter studio format illustrating a more complex continuity and scene-direction problem than a single-avatar clip. The reusable production playbook covers speaking/listening poses, consistent settings, and scene-specific review.
+
+### Beauty · UGC-style creative
+
+[![Presenter pointing to cheek blemishes in a bathroom setting](examples/previews/beauty-ugc.jpg)](examples/acne_makeup_ugc.mp4)
+
+[Watch or download the video](examples/acne_makeup_ugc.mp4) · 36.6 seconds · 720 × 1280 · audio included
+
+A relatable beauty setting and product-oriented UGC format. This is a synthetic creative example, not a real customer's testimonial, clinical evidence, or proof of product efficacy. The production rubric emphasizes face, skin, product, and hand continuity.
+
+### AI avatar · conversational lifestyle format
+
+[![AI presenter holding an orange-cat mug on a sofa](examples/previews/ai-avatar.jpg)](examples/ai_avatar.mp4)
+
+[Watch or download the video](examples/ai_avatar.mp4) · 36.8 seconds · 720 × 1280 · audio included
+
+A character-led lifestyle format with a cozy living-room setting. It illustrates the need to preserve wardrobe, room, props, and presenter identity across a generated sequence.
+
+**Eduardo's role across all three:** end-to-end project ownership, creative direction, and the skill-guided bot workflow that produced these exports. Generation and assembly were performed with AI tools; final CapCut editing and subtitles are a separate finishing stage. Technical metadata above was measured with FFprobe; no campaign-performance claims are made.
+
 ## Why this exists
 
 Generating one attractive clip is not the same as producing a usable ad. Multi-scene production introduces identity drift, inconsistent voices, cut-off dialogue, unclear gestures, failed jobs, and duplicate spend when interrupted runs are restarted.
@@ -83,7 +113,7 @@ Inspect `runs/demo/manifest.json` and `runs/demo/assets/`. Repeating `run` skips
 
 Eduardo defined the business objective, creative direction, approval requirements, and acceptance criteria through iterative production. AI assistants supported prompting, coding, troubleshooting, and documentation. The reference implementation was prepared with AI assistance and checked with automated tests and a local CLI walkthrough.
 
-No fabricated ROI, time savings, conversion metrics, customer testimonials, or production benchmarks are claimed. Historical media and private metadata are not bundled. A publishable media showcase is pending asset-rights review; the executable demo is the workflow demonstration currently available.
+No fabricated ROI, time savings, conversion metrics, customer testimonials, or production benchmarks are claimed. Private production metadata is not bundled. The showcase includes three owner-authorized pre-CapCut exports; the no-cost executable demo separately demonstrates workflow state without generating media.
 
 ## Current limitations
 
