@@ -14,7 +14,9 @@ pending -> submitting -> completed -> human approval recorded
                   +-- interruption: stop and reconcile, never auto-resubmit
 ```
 
-An approval is a reviewer label and UTC timestamp in the manifest. It is not identity verification. A local user can edit files; this is not a tamper-proof audit system. A stale lock after a crash requires checking that no writer is active before manual removal.
+Manifest schema 2 validates completed record contents against the expected mock record and binds a canonical JSON SHA-256 to the state and approval. Completed assets require completed, approved dependencies. Schema 1 manifests are rejected; use a new output directory.
+
+An approval is a reviewer label, UTC timestamp and canonical record hash in the manifest. It is not identity verification. A local user can edit files; this is not a tamper-proof audit system. A stale lock after a crash requires checking that no writer is active before manual removal.
 
 ## Provider boundary
 

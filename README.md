@@ -21,7 +21,7 @@ These are **AI-generated, bot-assembled pre-CapCut exports** from the original s
 
 [Watch or download the video](examples/Real%20State.mp4) · 48.1 seconds · 720 × 1280 · audio included
 
-A two-presenter studio format illustrating a more complex continuity and scene-direction problem than a single-avatar clip. The reusable production playbook covers speaking/listening poses, consistent settings, and scene-specific review.
+A synthetic two-presenter studio example, not a real customer testimonial, financing offer, endorsement by any institution, or verified service-level promise. Dialogue about financing, response times and customer experiences is fictional advertising copy, not evidence. The format illustrates a more complex continuity and scene-direction problem than a single-avatar clip. The reusable production playbook covers speaking/listening poses, consistent settings, and scene-specific review.
 
 ### Beauty · UGC-style creative
 
@@ -101,7 +101,7 @@ Inspect `runs/demo/manifest.json` and `runs/demo/assets/`. Repeating `run` skips
 - [Security and publishing](docs/security.md): personal/work separation and safe assets.
 - `creative_pipeline/apimart.py`: pure image/video request builders and nested result URL extraction.
 - `tests/`: behavioral tests for invalid DAGs, gates, resume, and provider contracts.
-- `docs/ci-workflow-template.yml`: optional GitHub Actions template for Python 3.9/3.12. CI is **not enabled** in this initial upload because the personal OAuth authorization lacks the `workflow` scope. After separately authorizing that scope, move the template to `.github/workflows/tests.yml`.
+- `docs/ci-workflow-template.yml`: inactive GitHub Actions template for Python 3.9/3.12. CI is **not enabled**. Before enabling it, review its permissions, pin third-party actions to reviewed immutable commits, and move it to `.github/workflows/tests.yml`.
 
 ## Applied AI and GTM relevance
 
@@ -123,4 +123,5 @@ No fabricated ROI, time savings, conversion metrics, customer testimonials, or p
 - Approvals are local audit entries, not authenticated multi-user authorization.
 - Visual/voice QA and FFmpeg/Whisper production steps are documented, not CLI features.
 - This is a local reference implementation, not a distributed production platform.
-- No open-source license has been selected. Repository visibility does not grant a license to reuse its contents.
+- The source code, tests, configuration and documentation are available under the [MIT license](LICENSE). Showcase videos and preview images are excluded; see [media rights](examples/MEDIA_RIGHTS.md).
+- Run directories must be trusted, symlink-free paths. Schema 1 manifests are rejected; start a new output directory. See [security boundaries](docs/security.md).

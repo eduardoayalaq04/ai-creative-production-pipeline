@@ -43,23 +43,42 @@ def video_payload(prompt, reference_urls, duration):
 
 
 def extract_https_urls(result):
-    """Collect unique HTTPS string values recursively from nested dicts/lists.
+    """Collect unique HTTPS values iteratively, preserving traversal order.
 
-    Includes video_urls arrays. Does not inspect dict keys, fetch URLs, or
-    claim that returned URLs are media; pass the provider result subtree.
+    Values only (including video_urls), no fetching or media claims. Reject
+    cycles, depth >32, >100000 nodes or >2 MiB of string values with ValueError.
+    Shared acyclic containers are allowed and count on each visit.
     """
-    urls = []
-    seen = set()
-
-    def visit(value):
-        if isinstance(value, dict):
-            for child in value.values():
-                visit(child)
-        elif isinstance(value, list):
-            for child in value:
-                visit(child)
-        elif _https(value) and value not in seen:
-            seen.add(value)
-            urls.append(value)
-    visit(result)
+    urls, seen, active = [], set(), set()
+    stack = [(result, 0, False)]
+    nodes = string_bytes = 0
+    while stack:
+        value, depth, leaving = stack.pop()
+        if leaving:
+            active.remove(id(value))
+            continue
+        nodes += 1
+        if nodes > 100000 or depth > 32:
+            raise ValueError("Response structure exceeds limits")
+        if isinstance(value, (dict, list)):
+            if id(value) in active:
+                raise ValueError("Cyclic response structure")
+            if len(value) + nodes + len(stack) > 100000:
+                raise ValueError("Response structure exceeds limits")
+            active.add(id(value))
+            stack.append((value, depth, True))
+            children = list(value.values()) if isinstance(value, dict) else value
+            stack.extend((child, depth + 1, False) for child in reversed(children))
+        elif isinstance(value, str):
+            if len(value) + string_bytes > 2 * 1024 * 1024:
+                raise ValueError("Response strings exceed size limit")
+            try:
+                string_bytes += len(value.encode("utf-8"))
+            except UnicodeError as exc:
+                raise ValueError("Invalid UTF-8 response") from exc
+            if string_bytes > 2 * 1024 * 1024:
+                raise ValueError("Response strings exceed size limit")
+            if _https(value) and value not in seen:
+                seen.add(value)
+                urls.append(value)
     return urls

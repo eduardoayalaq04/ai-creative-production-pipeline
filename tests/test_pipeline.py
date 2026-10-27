@@ -8,7 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from creative_pipeline.apimart import extract_https_urls, image_payload, video_payload
-from creative_pipeline.core import PipelineError, approve, plan, run, validate_campaign
+from creative_pipeline.core import MockProvider, PipelineError, approve, plan, run, validate_campaign
 
 
 def campaign():
@@ -50,7 +50,7 @@ class WorkflowTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
-        self.out = Path(self.tmp.name) / "run"
+        self.out = Path(self.tmp.name).resolve() / "run"
 
     def test_plan_only_and_changed_plan_rejected(self):
         result = plan(campaign(), self.out)
@@ -63,8 +63,8 @@ class WorkflowTests(unittest.TestCase):
             run(changed, self.out)
 
     def test_gating_resume_and_explicit_approval(self):
-        with patch("creative_pipeline.core.MockProvider.submit", wraps=None) as submit:
-            submit.side_effect = lambda asset, deps: {"mock": True, "asset_id": asset["id"], "media_generated": False}
+        expected_submit = MockProvider().submit
+        with patch("creative_pipeline.core.MockProvider.submit", side_effect=expected_submit) as submit:
             first = run(campaign(), self.out)
             self.assertEqual(submit.call_count, 1)
             self.assertEqual(first["assets"]["IMG_B"]["status"], "pending")
@@ -145,7 +145,7 @@ class WorkflowTests(unittest.TestCase):
             submit.assert_not_called()
 
     def test_cli(self):
-        source = Path(self.tmp.name) / "campaign.json"
+        source = Path(self.tmp.name).resolve() / "campaign.json"
         source.write_text(json.dumps(campaign()))
         def cli(*args):
             return subprocess.run([sys.executable, "-m", "creative_pipeline", *map(str, args)], capture_output=True, text=True)
