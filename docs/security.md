@@ -8,4 +8,9 @@
 - APIMart payload builders accept HTTPS reference URLs; they do not fetch them or guarantee that URLs are safe to download. A live adapter needs URL/network restrictions and safe download limits.
 - CLI approval labels are not authentication. Do not expose this local runner as a public service.
 - The demo has no network transport and spends no API credits.
-- No license is granted until the owner selects one; keep the initial repository private during review.
+- Code, configuration, tests and documentation are MIT-licensed; showcase videos and previews are excluded (see `examples/MEDIA_RIGHTS.md`). Keep this repository private until the owner approves public release.
+- Use a trusted output tree with no symlinks, including parent path components. Symlinks are rejected before accesses, but an adversary concurrently swapping paths is outside the threat model (TOCTOU). On systems with symlinked temporary directories, select a physical path before starting a run.
+- Completed mock records are validated against their expected schema/content and canonical JSON hash; approval hashes and dependency invariants are checked. Local write access can still forge the entire state; hashes are not authentication or cryptographic signatures.
+- JSON is limited to 2 MiB, depth 32 and 100,000 nodes; campaigns are limited to 256 assets. Invalid UTF-8 and cyclic structures are rejected. Limits also apply to persisted metadata, so a large campaign can exhaust the output budget before the asset-count ceiling.
+- Atomic replacement prevents partial JSON during ordinary interruptions, not guaranteed directory-entry durability after power loss.
+- Public GitHub ownership and commit attribution identify the portfolio owner; they are not credentials. Historical noreply addresses are public GitHub attribution, not private contact emails.

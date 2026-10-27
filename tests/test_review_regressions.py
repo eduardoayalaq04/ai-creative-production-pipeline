@@ -36,7 +36,7 @@ class ApprovalRegressionTests(unittest.TestCase):
     def setUp(self):
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
-        self.out = Path(temporary.name) / "run"
+        self.out = Path(temporary.name).resolve() / "run"
         self.campaign = campaign()
         self.ordered = validate_campaign(self.campaign)
         self.manifest = run(self.campaign, self.out)
@@ -60,7 +60,8 @@ class ApprovalRegressionTests(unittest.TestCase):
                     _validate_manifest(manifest, self.campaign, self.ordered)
 
     def test_malformed_completed_approval_cannot_bypass_gate_or_approve(self):
-        valid = {"reviewer": "human", "at": "2026-10-26T19:18:00+00:00"}
+        valid = {"reviewer": "human", "at": "2026-10-26T19:18:00+00:00",
+                 "record_sha256": self.manifest["assets"]["IMG_A"]["record_sha256"]}
         cases = [True, False, 1, 0, "approved", "", [], {},
                  {"reviewer": "human"}, {"at": valid["at"]},
                  dict(valid, extra=True)]
@@ -91,6 +92,8 @@ class ApprovalRegressionTests(unittest.TestCase):
                          {"reviewer": "human", "at": "2026-10-26T19:18:00-03:30"}):
             with self.subTest(approval=approval):
                 manifest = copy.deepcopy(self.manifest)
+                if approval is not None:
+                    approval = dict(approval, record_sha256=manifest["assets"]["IMG_A"]["record_sha256"])
                 manifest["assets"]["IMG_A"]["approval"] = approval
                 _validate_manifest(manifest, self.campaign, self.ordered)
 
