@@ -1,0 +1,36 @@
+# Architecture and implementation boundaries
+
+## Reference implementation
+
+The campaign is a strict JSON object containing `name` and `assets`. Each asset has a safe `id`, `kind`, `prompt`, and `depends_on`. Video assets additionally require a supported `duration` and exactly one image dependency.
+
+Validation rejects duplicate IDs, unknown dependencies, cycles, unsafe identifiers, unexpected fields, and unsupported video duration buckets. A topological order determines execution, not filename sorting.
+
+Each run stores a campaign fingerprint and per-asset fingerprints. The runner creates root mock records and waits at every unapproved dependency. State is persisted atomically. A local exclusive lock prevents concurrent writers. Completed records are not resubmitted; missing completed records and uncertain prior submissions stop the run for reconciliation.
+
+```text
+pending -> submitting -> completed -> human approval recorded
+                  |
+                  +-- interruption: stop and reconcile, never auto-resubmit
+```
+
+An approval is a reviewer label and UTC timestamp in the manifest. It is not identity verification. A local user can edit files; this is not a tamper-proof audit system. A stale lock after a crash requires checking that no writer is active before manual removal.
+
+## Provider boundary
+
+`apimart.py` constructs request dictionaries only. The contracts were distilled from prior tool-assisted integrations: numeric image count, explicit dimensions, one image reference for frame-to-video, supported duration buckets, and consistent aspect ratio fields. Nested HTTPS result URLs can be extracted from provider response fixtures.
+
+No HTTP transport or credential loading exists in this version. A future live adapter needs durable provider task IDs **before polling**, safe reconciliation after ambiguous timeouts, restricted download destinations, bounded retries for read operations, explicit cost authorization, and redacted observability. Retrying paid POST requests blindly is unsafe.
+
+## Original agent-assisted production
+
+The historical workflow combined hosted image/video generation, a human director, agent-written project scripts, visual review, speech transcription, and FFmpeg editing. It was not one autonomous application. This repository turns selected operating principles into reusable documentation and a small testable reference runner.
+
+## Future extensions, not shipped features
+
+- Live upload / submit / poll / download adapter with interrupted-task reconciliation.
+- Persisted provider task IDs and unique-task cost ledger.
+- FFprobe checks, contact-sheet generation, and transcript comparison.
+- Normalized editing manifests and an FFmpeg render command.
+- Authenticated approval UI and asset version history.
+- Rights-cleared media showcase.

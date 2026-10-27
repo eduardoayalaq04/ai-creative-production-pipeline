@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "creative-pipeline-reference"
+version = "0.1.0"
+description = "Standard-library, approval-gated creative workflow reference; mock records only"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.scripts]
+creative-pipeline = "creative_pipeline.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["creative_pipeline*"]

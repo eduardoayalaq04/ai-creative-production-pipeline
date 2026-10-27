@@ -1,0 +1,28 @@
+{
+  "name": "Fictional creative-service demonstration",
+  "assets": [
+    {
+      "id": "IMG_A",
+      "kind": "image",
+      "prompt": "Photorealistic fictional adult presenter in a neutral creative studio, modest casual clothes, natural skin texture, no text or logos. Establish identity and setting.",
+      "depends_on": []
+    },
+    {
+      "id": "IMG_B",
+      "kind": "image",
+      "prompt": "Use the approved identity anchor. Same person, clothes, props and studio. Medium shot looking into camera, natural conversational gesture, no text or logos.",
+      "depends_on": [
+        "IMG_A"
+      ]
+    },
+    {
+      "id": "ESC_1",
+      "kind": "video",
+      "prompt": "Single continuous take, natural micro-movements. Presenter says only once: \"Tu idea puede convertirse en un video para tu negocio.\" Voice: warm young adult female voice, natural conversational pace. Spanish with a Mexico City accent.",
+      "depends_on": [
+        "IMG_B"
+      ],
+      "duration": 8
+    }
+  ]
+}
