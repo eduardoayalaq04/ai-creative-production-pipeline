@@ -2,44 +2,27 @@
 
 **From marketing brief to reviewable AI video ads — with explicit human approval gates.**
 
-A portfolio project by [Eduardo Ayala](https://github.com/eduardoayalaq04), built around a real agent-assisted creative production workflow developed for Simplixy.
-
-This repository separates two things deliberately:
-
-1. **Production methodology:** reusable directing instructions, review checklists, and engineering lessons from image/video campaigns.
-2. **Executable reference implementation:** a newly extracted Python workflow that demonstrates dependency planning, approval gates, resumable state, and provider request construction without spending API credits.
-
-> The default demo creates labeled **mock JSON records**, not images or video. This version does not call a live generation API, run speech recognition, or render a final edit. Those steps are documented as the original tool-assisted workflow, not misrepresented as shipped automation.
-
 ## Video showcase
 
-These are **AI-generated, bot-assembled pre-CapCut exports** from the original skill-guided workflow, not outputs of this repository's mock runner. They are ready for final editorial polish and subtitles in CapCut; they are not presented as finished, subtitled campaign deliverables. Eduardo owns the examples and authorized their use in this portfolio.
-
-### Real estate · two-presenter podcast format
+### Real estate · two-presenter podcast
 
 [![Two presenters in a warm podcast studio](examples/previews/real-estate.jpg)](examples/Real%20State.mp4)
 
-[Watch or download the video](examples/Real%20State.mp4) · 48.1 seconds · 720 × 1280 · audio included
-
-A synthetic two-presenter studio example, not a real customer testimonial, financing offer, endorsement by any institution, or verified service-level promise. Dialogue about financing, response times and customer experiences is fictional advertising copy, not evidence. The format illustrates a more complex continuity and scene-direction problem than a single-avatar clip. The reusable production playbook covers speaking/listening poses, consistent settings, and scene-specific review.
+[Watch video](examples/Real%20State.mp4) · 48.1 seconds · 720 × 1280 · audio included. Demonstrates a two-character continuity and scene-direction challenge.
 
 ### Beauty · UGC-style creative
 
 [![Presenter pointing to cheek blemishes in a bathroom setting](examples/previews/beauty-ugc.jpg)](examples/acne_makeup_ugc.mp4)
 
-[Watch or download the video](examples/acne_makeup_ugc.mp4) · 36.6 seconds · 720 × 1280 · audio included
+[Watch video](examples/acne_makeup_ugc.mp4) · 36.6 seconds · 720 × 1280 · audio included. A product-oriented format highlighting face, skin, product and hand continuity.
 
-A relatable beauty setting and product-oriented UGC format. This is a synthetic creative example, not a real customer's testimonial, clinical evidence, or proof of product efficacy. The production rubric emphasizes face, skin, product, and hand continuity.
-
-### AI avatar · conversational lifestyle format
+### AI avatar · conversational lifestyle
 
 [![AI presenter holding an orange-cat mug on a sofa](examples/previews/ai-avatar.jpg)](examples/ai_avatar.mp4)
 
-[Watch or download the video](examples/ai_avatar.mp4) · 36.8 seconds · 720 × 1280 · audio included
+[Watch video](examples/ai_avatar.mp4) · 36.8 seconds · 720 × 1280 · audio included. A character-led format requiring consistent identity, wardrobe, room and props.
 
-A character-led lifestyle format with a cozy living-room setting. It illustrates the need to preserve wardrobe, room, props, and presenter identity across a generated sequence.
-
-**Eduardo's role across all three:** end-to-end project ownership, creative direction, and the skill-guided bot workflow that produced these exports. Generation and assembly were performed with AI tools; final CapCut editing and subtitles are a separate finishing stage. Technical metadata above was measured with FFprobe; no campaign-performance claims are made.
+**Showcase scope:** These owner-authorized, AI-generated, bot-assembled exports come from the original agent-assisted workflow, not the Python mock runner. Final CapCut editing and subtitles are a separate finishing stage. All examples are synthetic, not real customer testimonials, clinical evidence, product-efficacy evidence, financing offers, institutional endorsements or verified service promises. Dialogue about results and customer experiences is fictional advertising copy. Metadata was measured with FFprobe.
 
 ## Why this exists
 
@@ -107,21 +90,28 @@ Inspect `runs/demo/manifest.json` and `runs/demo/assets/`. Repeating `run` skips
 
 **Applied AI:** API contract modeling, dependency orchestration, persistent state, conservative recovery, and separating provider success from semantic quality.
 
-**GTM engineering:** translating a marketing objective into a structured creative brief and reusable production recipe. This project covers creative operations, **not** CRM integration, prospecting, campaign deployment, attribution, or validated conversion lift.
+**GTM engineering:** translating a marketing objective into a structured creative brief and reusable production recipe. **Focus: creative operations for paid acquisition**, from structured briefs to reviewable assets and repeatable production recipes. Campaign performance is not measured by this repository.
 
-## Authorship and evidence
+## Evidence and design decisions
 
-Eduardo defined the business objective, creative direction, approval requirements, and acceptance criteria through iterative production. AI assistants supported prompting, coding, troubleshooting, and documentation. The reference implementation was prepared with AI assistance and checked with automated tests and a local CLI walkthrough.
+- **Creative evidence:** three reviewable video examples above, produced with the original Simplixy workflow under Eduardo's creative direction.
+- **Executable evidence:** the no-cost CLI demonstrates DAG validation, explicit approvals, persistent state and conservative resume behavior using labeled mock JSON records.
+- **Approval before spend:** an approved anchor feeds scene stills; approved stills unlock video scenes. The reference runner models those dependencies without generating paid media.
+- **Targeted correction:** the production playbook treats continuity and dialogue QA as acceptance criteria, with rerolls focused on the affected scene rather than the whole sequence.
+- **Honest provider boundary:** APIMart helpers construct requests; they do not submit jobs. Local mock recovery is not evidence of exactly-once paid generation.
 
-No fabricated ROI, time savings, conversion metrics, customer testimonials, or production benchmarks are claimed. Private production metadata is not bundled. The showcase includes three owner-authorized pre-CapCut exports; the no-cost executable demo separately demonstrates workflow state without generating media.
+## Limitations
 
-## Current limitations
+- The CLI supports **mock execution only**: no live generation API calls or provider compatibility validation. Request builders are pure helpers.
+- Resume safeguards are local; they do not guarantee exactly-once submission to external paid services. This is not a distributed production platform.
+- Approvals are local audit entries, not authenticated multi-user authorization. Run directories must be trusted and symlink-free; schema 1 manifests require a new output directory.
+- Visual/voice QA, FFmpeg/Whisper processing and final editing belong to the documented production workflow, not shipped CLI automation.
+- No campaign lift, ROI, cost-per-finished-video or production throughput benchmark is claimed. Hosted CI is not enabled; an inactive template is linked above.
 
-- Only `mock` execution is supported; APIMart helpers do not perform HTTP calls.
-- No live provider compatibility test was performed for this repository.
-- Mock resume behavior does not guarantee exactly-once submission to an external paid service.
-- Approvals are local audit entries, not authenticated multi-user authorization.
-- Visual/voice QA and FFmpeg/Whisper production steps are documented, not CLI features.
-- This is a local reference implementation, not a distributed production platform.
-- The source code, tests, configuration and documentation are available under the [MIT license](LICENSE). Showcase videos and preview images are excluded; see [media rights](examples/MEDIA_RIGHTS.md).
-- Run directories must be trusted, symlink-free paths. Schema 1 manifests are rejected; start a new output directory. See [security boundaries](docs/security.md).
+See [architecture and implementation boundaries](docs/architecture.md) and [security notes](docs/security.md).
+
+## Authorship and license
+
+Eduardo Ayala defined the business objective, creative direction, workflow requirements and acceptance criteria. AI tools assisted with production, implementation, troubleshooting and documentation.
+
+Repository code, tests, configuration and documentation are [MIT licensed](LICENSE). Showcase videos and previews are excluded; see [media rights](examples/MEDIA_RIGHTS.md).
